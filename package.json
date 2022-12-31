@@ -1,0 +1,26 @@
+{
+  "name": "slomoco-web",
+  "version": "1.0.0",
+  "description": "permanent website for slomoco",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garrett-laroy-johnson/slomoco-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/garrett-laroy-johnson/slomoco-web/issues"
+  },
+  "homepage": "https://github.com/garrett-laroy-johnson/slomoco-web#readme",
+  "dependencies": {
+    "@11ty/eleventy": "^1.0.2",
+    "nunjucks": "^3.2.3"
+  }
+}
