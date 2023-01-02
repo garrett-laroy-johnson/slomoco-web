@@ -14,17 +14,22 @@
   {"title": "quidanz devlog",
   "link": "https://compudanzas.net/qiudanz_devlog.html"}
 ],
-  "socials" : {
-  "mastadon": "https://post.lurk.org/@compudanzas",
-  "instagram": "https://www.instagram.com/compudanzas/"
-}
-},
+"socials" : [
+{
+  "title": "mastadon",
+  "link" : "https://post.lurk.org/@compudanzas"
+  },
+    {
+  "title" : "instagram",
+  "link" : "https://www.instagram.com/compudanzas/"
+  }]
+  },
 "resources": [{
   "title": "[demo] qiudanz miniworkshop: conversation game",
   "type" : "link",
   "description": "in this video we are playing a game where each person performs a movement sequence that arises from applying a valid operation to the movement sequence performed by the previous one. the movements and operations are from qiudanz technique mode 1.",
-  "url" : "https://spectra.video/w/oV7RnBWZr7Zat2gbX1Mbkt"
-},{
+  "url" : "https://spectra.video/w/oV7RnBWZr7Zat2gbX1Mbkt"},
+  {
   "title": "intro to qiudanz technique mode 1",
   "description": "this introductory video demonstrates the principles of qiudanz technique mode 1 so that you can learn and practice it complementing the written notes and live workshops.",
   "type" : "link",
@@ -68,11 +73,17 @@
     </p>
   </div>
 
-  <div class="col-3 bg-light">
+  <div class="col-6 bg-light">
     <h4>links</h4>
 {% for el in metadata.links %}
 <div>
 <a href = "{{el.link}}">{{ el.title }}</a> 
+</div>
+{% endfor %}
+<h4>social</h4>
+{% for social in metadata.socials %}
+<div>
+<a href = "{{social.link}}">{{ social.title }}</a> 
 </div>
 {% endfor %}
   </div>
@@ -84,9 +95,9 @@
   <div class="col-3 bg-light" style="border-style: solid">
     <h4>{{ re.title }}</h4>
     <p>description: {{ re.description }}</p>
-    {% if re.type == "link" %} 
-        <a href= "{{ re.url }}"><button type="button" class="btn btn-outline-info">Link</button></a>
-    {% endif %}
+    {%- if re.type == "link" -%} 
+        <a href = "{{ re.url }}"><button type="button" class="btn btn-outline-info">Link</button></a>
+    {%- endif -%}
   </div>
   {% endfor %}
 </div>
