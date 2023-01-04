@@ -1,0 +1,721 @@
+<html>
+  <body class="c13 doc-content">
+    <h3 class="c9" id="h.n9341gylvj0o">
+      <span class="c8"
+        >Interlude: Building a Signaling Server for Simple-Peer</span
+      >
+    </h3>
+    <p class="c2 c7"><span class="c1"></span></p>
+    <p class="c2">
+      <span>In the process of working on </span
+      ><span class="c15">You, Me, and Our Computers</span
+      ><span class="c1"
+        >, I have been developing my underlying server and client code to be
+        released as an open-source tool. This week I released the first version
+        of the shared server and client code and wrote a Medium post explaining
+        the tool. Here&rsquo;s the text of the Medium post, republished here.
+      </span>
+    </p>
+    <p class="c2 c7"><span class="c1"></span></p>
+    <hr />
+    <p class="c2 c7"><span class="c1"></span></p>
+    <h3 class="c9" id="h.qq93d072wppl">
+      <span class="c17">Building a Signaling Server for Simple-Peer</span>
+    </h3>
+    <p class="c5">
+      <span class="c16 c15"
+        >A quick intro to signaling, STUN and TURN, and an open-source signaling
+        server and wrapper for simple-peer.</span
+      >
+    </p>
+    <p class="c2">
+      <span
+        style="
+          overflow: hidden;
+          display: inline-block;
+          margin: 0px 0px;
+          border: 0px solid #000000;
+          transform: rotate(0rad) translateZ(0px);
+          -webkit-transform: rotate(0rad) translateZ(0px);
+          width: 624px;
+          height: 468px;
+        "
+        ><img
+          alt=""
+          src="/img/youmeserver1.gif"
+          style="
+            width: 624px;
+            height: 468px;
+            margin-left: 0px;
+            margin-top: 0px;
+            transform: rotate(0rad) translateZ(0px);
+            -webkit-transform: rotate(0rad) translateZ(0px);
+          "
+          title=""
+      /></span>
+    </p>
+    <p class="c5">
+      <span>Back in 2015 I built</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://kinectron.github.io/%23/&amp;sa=D&amp;source=editors&amp;ust=1672778094185297&amp;usg=AOvVaw1NZYOdd6DDL_Bh94VpgGpd"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://kinectron.github.io/%23/&amp;sa=D&amp;source=editors&amp;ust=1672778094185596&amp;usg=AOvVaw0EaS0-vsF3Uli9MW8JRrCT"
+          >an open-source tool</a
+        ></span
+      ><span>&nbsp;that depends on</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://peerjs.com/&amp;sa=D&amp;source=editors&amp;ust=1672778094185764&amp;usg=AOvVaw08FyKCJWmOlsziHkaqE0x7"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://peerjs.com/&amp;sa=D&amp;source=editors&amp;ust=1672778094185886&amp;usg=AOvVaw07e8CJ8dlNa-h1IItT7cDy"
+          >PeerJs</a
+        ></span
+      ><span
+        >. A few years later I was giving the tool a revamp and noticed a number
+        of errors coming from PeerJS, which had been deprecated by its original
+        developer around 2014. After some research into alternatives for PeerJS,
+        I found that</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/feross/simple-peer&amp;sa=D&amp;source=editors&amp;ust=1672778094186054&amp;usg=AOvVaw0g53MK2xlg6Y4DeMqObdcA"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/feross/simple-peer&amp;sa=D&amp;source=editors&amp;ust=1672778094186184&amp;usg=AOvVaw2Cm_4V3RLUi4i6MMDN6t0C"
+          >simple-peer</a
+        ></span
+      ><span
+        >&nbsp;by Feross was well documented, well maintained, and used by a
+        number of projects. But it was missing one important
+        component&mdash;a</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Signaling_and_video_calling&amp;sa=D&amp;source=editors&amp;ust=1672778094186384&amp;usg=AOvVaw0dlFS1hCYlmQTMDxD_ps4T"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Signaling_and_video_calling&amp;sa=D&amp;source=editors&amp;ust=1672778094186550&amp;usg=AOvVaw3mUmM7U5-Oc8dfvZkJSLQ7"
+          >signaling server</a
+        ></span
+      ><span class="c1">. </span>
+    </p>
+    <p class="c5">
+      <span
+        >Since then, I&rsquo;ve been slowly gathering information about
+        signaling, STUN, and TURN servers, and ultimately creating my own
+        open-source</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-server&amp;sa=D&amp;source=editors&amp;ust=1672778094186792&amp;usg=AOvVaw06OvhllgKSe7b7tXXn0o1t"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-server&amp;sa=D&amp;source=editors&amp;ust=1672778094186936&amp;usg=AOvVaw38tF_H3ddTYiWcNVU4pEjw"
+          >signaling server</a
+        ></span
+      ><span>&nbsp;and</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-wrapper&amp;sa=D&amp;source=editors&amp;ust=1672778094187134&amp;usg=AOvVaw3oAcykvEKnhG10U-2rQ4pe"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-wrapper&amp;sa=D&amp;source=editors&amp;ust=1672778094187281&amp;usg=AOvVaw1x4-BlYrwPxnT2kxxozeF6"
+          >wrapper</a
+        ></span
+      ><span
+        >&nbsp;for simple-peer. Here&rsquo;s a compilation of what I&rsquo;ve
+        learned, the resources I&rsquo;ve found helpful, and a short
+        introduction to the tool that I&rsquo;ve built.
+      </span>
+    </p>
+    <h3 class="c9" id="h.3hywqndok24u">
+      <span class="c8">What is a signaling server and why do I need one?</span>
+    </h3>
+    <p class="c5">
+      <span>First things first. Peer connections, which are part of</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://webrtc.org/&amp;sa=D&amp;source=editors&amp;ust=1672778094187647&amp;usg=AOvVaw3CKNyuHv-VW2YFinQUiMpH"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://webrtc.org/&amp;sa=D&amp;source=editors&amp;ust=1672778094187777&amp;usg=AOvVaw2_wopq-1ghWRB2OIZsrD-L"
+          >WebRTC</a
+        ></span
+      ><span
+        >, are direct connections between two computers (called
+        &ldquo;peers&rdquo;) and are used to send video, audio, and data
+        directly between the two computers. Peer connections are distinct from
+        connections to a server because they allow for direct exchange of
+        information between peers, rather than going through a server.
+      </span>
+    </p>
+    <p class="c2">
+      <span
+        style="
+          overflow: hidden;
+          display: inline-block;
+          margin: 0px 0px;
+          border: 0px solid #000000;
+          transform: rotate(0rad) translateZ(0px);
+          -webkit-transform: rotate(0rad) translateZ(0px);
+          width: 624px;
+          height: 300px;
+        "
+        ><img
+          alt=""
+          src="/img/youmeserver2.png"
+          style="
+            width: 624px;
+            height: 300px;
+            margin-left: 0px;
+            margin-top: 0px;
+            transform: rotate(0rad) translateZ(0px);
+            -webkit-transform: rotate(0rad) translateZ(0px);
+          "
+          title=""
+      /></span>
+    </p>
+    <p class="c2 c7"><span class="c1"></span></p>
+    <p class="c5">
+      <span class="c1"
+        >While the two peers can communicate directly with each other once they
+        have a peer connection, WebRTC does not give peers a way to find each
+        other to establish a connection&mdash;that&rsquo;s where a signaling
+        server comes in.
+      </span>
+    </p>
+    <p class="c5">
+      <span class="c1"
+        >A signaling server is a server that allows peers to find each other and
+        to establish a peer connection. It exists outside of WebRTC, but is an
+        essential component to establishing a peer connection.
+      </span>
+    </p>
+    <p class="c2">
+      <span
+        style="
+          overflow: hidden;
+          display: inline-block;
+          margin: 0px 0px;
+          border: 0px solid #000000;
+          transform: rotate(0rad) translateZ(0px);
+          -webkit-transform: rotate(0rad) translateZ(0px);
+          width: 624px;
+          height: 536px;
+        "
+        ><img
+          alt=""
+          src="/img/youmeserver4.png"
+          style="
+            width: 624px;
+            height: 536px;
+            margin-left: 0px;
+            margin-top: 0px;
+            transform: rotate(0rad) translateZ(0px);
+            -webkit-transform: rotate(0rad) translateZ(0px);
+          "
+          title=""
+      /></span>
+    </p>
+    <h3 class="c9" id="h.24rku1jsweqm">
+      <span class="c8">A Signaling Server for Simple-Peer</span>
+    </h3>
+    <p class="c5">
+      <span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/feross/simple-peer&amp;sa=D&amp;source=editors&amp;ust=1672778094188506&amp;usg=AOvVaw2UccSq-PDZDmTssChqxByN"
+          >Simple-peer</a
+        ></span
+      ><span class="c1"
+        >&nbsp;is a library that creates one-to-one peer connections, but it
+        does not include a signaling server.
+      </span>
+    </p>
+    <p class="c2">
+      <span
+        style="
+          overflow: hidden;
+          display: inline-block;
+          margin: 0px 0px;
+          border: 0px solid #000000;
+          transform: rotate(0rad) translateZ(0px);
+          -webkit-transform: rotate(0rad) translateZ(0px);
+          width: 624px;
+          height: 536px;
+        "
+        ><img
+          alt=""
+          src="/img/youmeserver3.png"
+          style="
+            width: 624px;
+            height: 536px;
+            margin-left: 0px;
+            margin-top: 0px;
+            transform: rotate(0rad) translateZ(0px);
+            -webkit-transform: rotate(0rad) translateZ(0px);
+          "
+          title=""
+      /></span>
+    </p>
+    <p class="c2 c7"><span class="c1"></span></p>
+    <p class="c2">
+      <span class="c1"
+        >The simple-peer library creates peer connections, but does not handle
+        signaling.
+      </span>
+    </p>
+    <p class="c5">
+      <span
+        >I wanted to use simple-peer for my project, but I could not find an
+        open-source signaling server for it. So, I built one with the help of
+        the</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://codelabs.developers.google.com/codelabs/webrtc-web%230&amp;sa=D&amp;source=editors&amp;ust=1672778094188928&amp;usg=AOvVaw2fsOtE61T2ulRZkT6fEUpF"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://codelabs.developers.google.com/codelabs/webrtc-web%230&amp;sa=D&amp;source=editors&amp;ust=1672778094189083&amp;usg=AOvVaw1Z-nHPpZCIBdPvhQ71YchE"
+          >Codelab on Real time communication with WebRTC</a
+        ></span
+      ><span>. A year later, I taught</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/The-Body-Everywhere-And-Here/blob/master/syllabus.md&amp;sa=D&amp;source=editors&amp;ust=1672778094189264&amp;usg=AOvVaw1vPt3DSduzGlojLWsTY8Cm"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/The-Body-Everywhere-And-Here/blob/master/syllabus.md&amp;sa=D&amp;source=editors&amp;ust=1672778094189425&amp;usg=AOvVaw32PNagRNmsdXC5QM3vaxUd"
+          >a class at NYU</a
+        ></span
+      ><span class="c1"
+        >&nbsp;using peers, and I realized I needed a tool to use for my class
+        examples. This is what inspired me to develop the signaling server I
+        wrote into something useable by others.
+      </span>
+    </p>
+    <p class="c5">
+      <span>The tool I built is made up of two modules:</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-server&amp;sa=D&amp;source=editors&amp;ust=1672778094189710&amp;usg=AOvVaw3azRbucn8eXw2jACXTqkER"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-server&amp;sa=D&amp;source=editors&amp;ust=1672778094189866&amp;usg=AOvVaw1UuKVEaW51IBQj1fkeXXMP"
+          >simple-peer-server</a
+        ></span
+      ><span>&nbsp;and</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-wrapper&amp;sa=D&amp;source=editors&amp;ust=1672778094190019&amp;usg=AOvVaw3isrHIS-0GKPuCAtt0WXLP"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-wrapper&amp;sa=D&amp;source=editors&amp;ust=1672778094190151&amp;usg=AOvVaw3pbWWy4v1dv1NVYPXNt4UW"
+          >simple-peer-wrapper</a
+        ></span
+      ><span class="c1"
+        >. First, you need to get the server up and running.
+      </span>
+    </p>
+    <p class="c2">
+      <span class="c1">// in your terminal &mdash; install the module</span>
+    </p>
+    <p class="c2"><span class="c1">npm install simple-peer-server</span></p>
+    <p class="c2 c7"><span class="c1"></span></p>
+    <p class="c2">
+      <span class="c1"
+        >// in your application file &mdash; create the server</span
+      >
+    </p>
+    <p class="c2">
+      <span class="c1"
+        >const SimplePeerServer = require(&#39;simple-peer-server&#39;);</span
+      >
+    </p>
+    <p class="c2">
+      <span class="c1">const http = require(&#39;http&#39;);</span>
+    </p>
+    <p class="c2">
+      <span class="c1">const server = http.createServer();</span>
+    </p>
+    <p class="c2">
+      <span class="c1"
+        >const spServer = new
+        SimplePeerServer(server);server.listen(8081);</span
+      >
+    </p>
+    <p class="c2 c7"><span class="c1"></span></p>
+    <p class="c2">
+      <span class="c1">// in your terminal &mdash; run it!</span>
+    </p>
+    <p class="c2"><span class="c1">node app.js</span></p>
+    <p class="c5">
+      <span class="c1"
+        >Then, you need to include the wrapper in your client code.
+      </span>
+    </p>
+    <p class="c2">
+      <span class="c1">// in your terminal &mdash; install the module</span>
+    </p>
+    <p class="c2"><span class="c1">npm install simple-peer-wrapper</span></p>
+    <p class="c2 c7"><span class="c1"></span></p>
+    <p class="c2">
+      <span class="c1"
+        >// in your client code - create a wrapper and connect to your
+        server</span
+      >
+    </p>
+    <p class="c2"><span class="c1">const options = {</span></p>
+    <p class="c2">
+      <span class="c1">&nbsp;serverUrl: &#39;http://localhost:8081&#39;,</span>
+    </p>
+    <p class="c2"><span class="c1">};</span></p>
+    <p class="c2 c7"><span class="c1"></span></p>
+    <p class="c2">
+      <span class="c1">const spw = new SimplePeerWrapper(options);</span>
+    </p>
+    <p class="c2"><span class="c1">spw.connect();</span></p>
+    <p class="c2">
+      <span class="c1">spw.on(&#39;data&#39;, (data) =&gt; {</span>
+    </p>
+    <p class="c2">
+      <span class="c1">&nbsp;const partnerData = data.data;</span>
+    </p>
+    <p class="c2"><span class="c1">});</span></p>
+    <p class="c2">
+      <span class="c1"
+        >// make sure you close the connection before you close the window</span
+      >
+    </p>
+    <p class="c2"><span class="c1">window.onbeforeunload = () =&gt; {</span></p>
+    <p class="c2"><span class="c1">&nbsp;spw.close();</span></p>
+    <p class="c2"><span class="c1">};</span></p>
+    <p class="c5">
+      <span
+        >The code above connects to the signaling server, creates a peer
+        connection using simple-peer, and stores the data received from the
+        other peer in a variable. The full documentation and example code is
+        available</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-server&amp;sa=D&amp;source=editors&amp;ust=1672778094192106&amp;usg=AOvVaw1IszYrAYabfhS78yzgYo2Q"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-server&amp;sa=D&amp;source=editors&amp;ust=1672778094192258&amp;usg=AOvVaw0PJASMDM7PYC8JHL_2yGTg"
+          >here (server)</a
+        ></span
+      ><span>&nbsp;and</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-wrapper&amp;sa=D&amp;source=editors&amp;ust=1672778094192413&amp;usg=AOvVaw2byU3nLDJjf3LRyedOLmAI"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-wrapper&amp;sa=D&amp;source=editors&amp;ust=1672778094192560&amp;usg=AOvVaw1nEuLO77vguAef8e2Mjvy6"
+          >here (wrapper)</a
+        ></span
+      ><span class="c1">.</span>
+    </p>
+    <h3 class="c9" id="h.48n5x0p1ky72">
+      <span class="c8">A Note on STUN / TURN Servers </span>
+    </h3>
+    <p class="c5">
+      <span class="c1"
+        >Simple-peer-server and simple-peer-wrapper together provide a signaling
+        server and client that establish a connection between two or more
+        peers.</span
+      >
+    </p>
+    <p class="c5">
+      <span>They use</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://socket.io/&amp;sa=D&amp;source=editors&amp;ust=1672778094193048&amp;usg=AOvVaw3RrDUbVS-WBgkT-2OnoY7r"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://socket.io/&amp;sa=D&amp;source=editors&amp;ust=1672778094193190&amp;usg=AOvVaw3U_ECptSzc1FmyfRAp4JUy"
+          >Socket.IO</a
+        ></span
+      ><span
+        >&nbsp;to transport the signaling messages, then create the peer
+        connections via</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/feross/simple-peer&amp;sa=D&amp;source=editors&amp;ust=1672778094193357&amp;usg=AOvVaw0aBpE0m4zFoCO5XUuzlkT5"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/feross/simple-peer&amp;sa=D&amp;source=editors&amp;ust=1672778094193487&amp;usg=AOvVaw3TxwQ8oKVYaytwGXxom96R"
+          >simple-peer</a
+        ></span
+      ><span class="c1">.</span>
+    </p>
+    <p class="c5">
+      <span
+        >To just get up and running, you can run a signaling server and your
+        client code on your</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://whatismyipaddress.com/localhost&amp;sa=D&amp;source=editors&amp;ust=1672778094193716&amp;usg=AOvVaw3Z4RLDVGFpDRCBq0_mlPlh"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://whatismyipaddress.com/localhost&amp;sa=D&amp;source=editors&amp;ust=1672778094193914&amp;usg=AOvVaw3MtSgmbqVCiB5JyZsTTx5m"
+          >localhost</a
+        ></span
+      ><span class="c1">. &nbsp;</span>
+    </p>
+    <p class="c5">
+      <span
+        >If you are launching your application on the public internet, you will
+        likely need STUN and TURN servers as well. STUN and TURN servers are
+        responsible for getting the IP address for the peers. STUN servers can
+        get a public IP address for about</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://www.html5rocks.com/en/tutorials/webrtc/infrastructure/&amp;sa=D&amp;source=editors&amp;ust=1672778094194267&amp;usg=AOvVaw3ipLEnIIxU_vTzRXhE4XAM"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://www.html5rocks.com/en/tutorials/webrtc/infrastructure/&amp;sa=D&amp;source=editors&amp;ust=1672778094194427&amp;usg=AOvVaw3DEJMy6LG7pQNiKwi7WgSk"
+          >86 percent of connections</a
+        ></span
+      ><span class="c1"
+        >. If you are just testing locally or creating a class project, STUN
+        servers will likely do the trick. For the other 14 percent, and for
+        applications that need to work reliably on the public internet, a TURN
+        server is needed to get past certain firewalls.</span
+      >
+    </p>
+    <p class="c5">
+      <span class="c1"
+        >Default STUN servers are provided by simple-peer. (Although they can be
+        overwritten in simple-peer-wrapper.) TURN servers can be expensive to
+        maintain and need to be provided by the application developer
+        (that&rsquo;s probably you if you&rsquo;re reading this ;).</span
+      >
+    </p>
+    <p class="c5">
+      <span
+        >To learn more about signaling, STUN, and TURN servers, I
+        recommend</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://www.html5rocks.com/en/tutorials/webrtc/infrastructure/&amp;sa=D&amp;source=editors&amp;ust=1672778094194763&amp;usg=AOvVaw1h1sY8B_EiEEdZY9JrWm8r"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://www.html5rocks.com/en/tutorials/webrtc/infrastructure/&amp;sa=D&amp;source=editors&amp;ust=1672778094194918&amp;usg=AOvVaw3JyKdDLKcDMKimZiAvJGo4"
+          >this excellent article by Sam Dutton</a
+        ></span
+      ><span
+        >. If you are in need of a TURN server, you may find this article
+        on</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://gabrieltanner.org/blog/turn-server&amp;sa=D&amp;source=editors&amp;ust=1672778094195081&amp;usg=AOvVaw3MA4uGOdoJy2GqcW0Yn-d_"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://gabrieltanner.org/blog/turn-server&amp;sa=D&amp;source=editors&amp;ust=1672778094195216&amp;usg=AOvVaw3sel0TF290P8shrqS9Qta6"
+          >How to set up and configure your own TURN server using Coturn</a
+        ></span
+      ><span
+        >&nbsp;by Gabriel Turner helpful. You could also check out paid services
+        like</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://www.twilio.com/stun-turn&amp;sa=D&amp;source=editors&amp;ust=1672778094195364&amp;usg=AOvVaw13FBFZSrukQX9ijP7-CFqM"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://www.twilio.com/stun-turn&amp;sa=D&amp;source=editors&amp;ust=1672778094195491&amp;usg=AOvVaw33Yk7EJRo4I9lwKnduM7S0"
+          >Twilio&rsquo;s Network Traversal Service</a
+        ></span
+      ><span class="c1">.</span>
+    </p>
+    <p class="c5">
+      <span>Once you have your TURN servers setup, see the</span
+      ><span
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-wrapper%23new-simplepeerwrapperoptions&amp;sa=D&amp;source=editors&amp;ust=1672778094195729&amp;usg=AOvVaw3BpX9ZUkR9BOD_6MYSuWj_"
+          >&nbsp;</a
+        ></span
+      ><span class="c3"
+        ><a
+          class="c0"
+          href="https://www.google.com/url?q=https://github.com/lisajamhoury/simple-peer-wrapper%23new-simplepeerwrapperoptions&amp;sa=D&amp;source=editors&amp;ust=1672778094195906&amp;usg=AOvVaw21wLbKr-Dz6D1vggMZevUY"
+          >simple-peer-wrapper documentation</a
+        ></span
+      ><span class="c1"
+        >&nbsp;for how to add them to your peer connections.</span
+      >
+    </p>
+    <h3 class="c9" id="h.9nw8onmmns9v">
+      <span class="c8">Helpful Resources </span>
+    </h3>
+    <p class="c5">
+      <span class="c1"
+        >Here are the references that I found helpful as I was researching and
+        building this. Please feel free to share other helpful resources in the
+        comments :)
+      </span>
+    </p>
+    <h4 class="c11" id="h.f8fstnp3m4b"><span class="c12">Articles </span></h4>
+    <ul class="c14 lst-kix_hgn6ubvr48r5-0 start">
+      <li class="c4 li-bullet-0">
+        <span class="c3"
+          ><a
+            class="c0"
+            href="https://www.google.com/url?q=https://www.html5rocks.com/en/tutorials/webrtc/infrastructure/&amp;sa=D&amp;source=editors&amp;ust=1672778094196471&amp;usg=AOvVaw2gCovSOPGAv1hCX3GLwx0M"
+            >Build the backend services needed for a WebRTC app: STUN, TURN, and
+            signaling</a
+          ></span
+        ><span class="c1">&nbsp;by Sam Dutton &nbsp;</span>
+      </li>
+      <li class="c4 li-bullet-0">
+        <span class="c3"
+          ><a
+            class="c0"
+            href="https://www.google.com/url?q=https://codelabs.developers.google.com/codelabs/webrtc-web%230&amp;sa=D&amp;source=editors&amp;ust=1672778094196792&amp;usg=AOvVaw2C05gjf5mxo_etrILBYijb"
+            >Codelab: Realtime communication with WebRTC</a
+          ></span
+        >
+      </li>
+      <li class="c4 li-bullet-0">
+        <span class="c3"
+          ><a
+            class="c0"
+            href="https://www.google.com/url?q=https://computer.howstuffworks.com/nat.htm&amp;sa=D&amp;source=editors&amp;ust=1672778094197016&amp;usg=AOvVaw0ykXVmW9CtkNn_XMKXnPux"
+            >How Network Address Translation Works</a
+          ></span
+        ><span class="c1">&nbsp;by Jeff Tyson </span>
+      </li>
+      <li class="c4 li-bullet-0">
+        <span class="c3"
+          ><a
+            class="c0"
+            href="https://www.google.com/url?q=https://gabrieltanner.org/blog/turn-server&amp;sa=D&amp;source=editors&amp;ust=1672778094197233&amp;usg=AOvVaw2pu8eV_ozUWtCchQsw77Pb"
+            >How to set up and configure your own TURN server using Coturn</a
+          ></span
+        ><span class="c1">&nbsp;by Gabriel Tanner</span>
+      </li>
+    </ul>
+    <h4 class="c11" id="h.2xhkhvxwfqpm">
+      <span class="c12">Code References / Tools </span>
+    </h4>
+    <ul class="c14 lst-kix_x4i5prku0yz8-0 start">
+      <li class="c4 li-bullet-0">
+        <span class="c3"
+          ><a
+            class="c0"
+            href="https://www.google.com/url?q=https://github.com/coturn/coturn&amp;sa=D&amp;source=editors&amp;ust=1672778094197553&amp;usg=AOvVaw0hynyNMn7wSkzlW2f4kjkf"
+            >coturn</a
+          ></span
+        ><span class="c1">&nbsp;</span>
+      </li>
+      <li class="c4 li-bullet-0">
+        <span class="c3"
+          ><a
+            class="c0"
+            href="https://www.google.com/url?q=https://github.com/feross/simple-peer&amp;sa=D&amp;source=editors&amp;ust=1672778094197762&amp;usg=AOvVaw1nZOnEkSFqaIqDNgVzfl2k"
+            >simple-peer</a
+          ></span
+        ><span class="c1">&nbsp;by Feross</span>
+      </li>
+      <li class="c4 li-bullet-0">
+        <span class="c3"
+          ><a
+            class="c0"
+            href="https://www.google.com/url?q=https://gist.github.com/sagivo/3a4b2f2c7ac6e1b5267c2f1f59ac6c6b&amp;sa=D&amp;source=editors&amp;ust=1672778094198027&amp;usg=AOvVaw0MwHrUWRrlfX-3MMb_R9fg"
+            >WebRTC stun / turn server list</a
+          ></span
+        ><span class="c1">&nbsp;by Sagivo</span>
+      </li>
+      <li class="c4 li-bullet-0">
+        <span class="c3"
+          ><a
+            class="c0"
+            href="https://www.google.com/url?q=https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/&amp;sa=D&amp;source=editors&amp;ust=1672778094198265&amp;usg=AOvVaw1AY7i7ibmW6HOCVfSbKEiZ"
+            >WebRTC samples: Trickle Ice</a
+          ></span
+        >
+      </li>
+    </ul>
+    <p class="c5 c7"><span class="c1"></span></p>
+    <p class="c2 c7"><span class="c1"></span></p>
+  </body>
+</html>

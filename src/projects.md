@@ -7,15 +7,19 @@ layout: base.njk
 
 <table class = "table table-striped">
 <tr>
-<th>Author</th>
+
 <th>Project</th>
+<th>Author</th>
 <th>Type</th>
 <th>Phase</th>
 </tr>
 {% for page in collections.projs %}
 <tr>
-<td>{{page.data.author}}</td> <td><a href = "{{ page.url }}">{{ page.data.title }}</a></td><td>{{page.data.type}}</td><td>{{page.data.phase}}</td>
+<td><a href = "{{ page.url }}">{{ page.data.metadata.title }}</a></td><td>{{page.data.metadata.author}}</td> <td>{{page.data.metadata.type}}</td><td>{{page.data.metadata.phase}}</td>
 </tr>
 {%- endfor %}
 
 </table>
+
+<!--
+ -->

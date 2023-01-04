@@ -7,9 +7,20 @@ cb:after {
   background-color: #4c00b0;
 }
 
+embed {
+  position: absolute;
+  bottom: 0;
+}
+
 blockquote {
   border-width: 10px;
   border-color: black;
+}
+
+.slomocoNav {
+  background-color: #dec2eb;
+  color: #052d61;
+  /* #F4D187 */
 }
 
 p,
@@ -31,12 +42,17 @@ body {
   /* background-color: "#b0c7bd"; */
 }
 
+.shade {
+  background-color: #052d61;
+  opacity: 0.8;
+}
+
 a {
-  color: #be2ed6;
+  color: #052d61;
 }
 
 a:hover {
-  color: #4c00b0;
+  color: #f4d187;
 }
 
 .nav-butt {

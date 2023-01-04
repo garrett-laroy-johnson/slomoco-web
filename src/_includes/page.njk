@@ -1,5 +1,198 @@
 ---
 layout: base.njk
 ---
+{% if metadata.banner %}
+<style>
+  .masthead {
+    height: 30vh;
+    min-height: 200px;
+    background-image: url({{ metadata.banner }});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+</style>
+<div class="masthead">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 text-center shade">
+        <h1 class="text-light">
+          {{ metadata.title }} // {{ metadata.author }}
+        </h1>
+         </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<hr>
+<div class="row">
+  <div class="col-9">
 
-{{ content | safe }}
+
+    {% if not metadata.banner %}
+     <h1>{{metadata.title}} | {{metadata.author}} </h1>
+     <h2>{{metadata.subtitle}}</h2> 
+    {% endif %}
+    <article>
+      {{content | safe}}
+    </article>
+      <p>{{ metadata.description }}</p>    
+    </div>
+
+    <div class="col-3 bg-light">
+      {% if metadata.thumbnail %}
+      <a href = "{{metadata.thumbnail}}">
+        <img src = "{{metadata.thumbnail}}" class = "img-thumbnail">
+       </a>
+      {% endif %}
+      {% if metadata.links %}
+    <h4>links</h4>
+    {% endif %} 
+    {% for el in metadata.links %}
+    <div>
+      <a href="{{ el.link }}">
+        <button type="button" class="btn btn-outline-secondary">{{ el.title }}</button>
+      </a>
+    </div>
+    {% endfor %} 
+    {% if metadata.socials %}
+    <h4>social</h4>
+    {% endif %} 
+    {% for social in metadata.socials %}
+    <div>
+      <a href="{{ social.link }}">
+        <button type="button" class="btn btn-outline-secondary">{{ social.title }}</button>  
+      </a>
+    </div>
+    {% endfor %}
+  <hr>
+    <span class="badge bg-dark rounded-pill" >
+      {{ metadata.phase }} {{ metadata.type }}
+    </span>
+  </div>
+
+</div>
+
+<div class="row">
+  
+  {% if resources %}
+  <h2>resources:</h2>
+  {% endif %}
+  {% for re in resources %}
+{% if re.type == "series" %}
+  <div class="row bg-light">
+    <h4 class="">{{ re.title }}</h4>
+    <h5>resource series</h5>
+    <p>{{ re.description }}</p>
+    {% for s in re.resources %}
+    <div class="col-4 bg-light" style="border-style: dotted; padding-bottom: 10px; padding-top: 10px;">
+      <h4>{{ s.title }}</h4>
+      <p>{{ s.description }}</p>
+      {% if s.type == "link" %}
+      <a href="{{ s.url }}">
+        <button type="button" class="btn btn-outline-info">Link</button>
+       </a>
+       {%- elseif s.type == "youtube" -%}
+       <iframe
+         src="https://youtube.com/embed/{{ s.id }} "
+         width="100%"
+         frameborder="0"
+         allow="autoplay; fullscreen"
+         allowfullscreen
+       ></iframe>
+       {%- elseif s.type == "image" -%}
+       <div>
+         <a href = "{{s.url}}">
+          <img src = "{{s.url}}" class = "img-thumbnail">
+         </a>
+         </div>
+       {% elseif s.type == "audio" %}
+       <audio
+       controls controlslist
+       src="{{s.url}}"></audio>
+       {% elseif s.type == "vimeo" %}
+      <iframe
+        src="https://player.vimeo.com/video/{{ s.id }}"
+        width="100%"
+        frameborder="0"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+      ></iframe>
+      {% endif %}
+    </div>
+    {% endfor %}
+    </div>
+{% else %}
+        <div class="col-4 bg-light" style="border-style: dotted; padding-bottom: 10px; padding-top: 10px">
+          <h4>{{ re.title }}</h4>
+          <p>{{ re.description }}</p>
+          {%- if re.type == "link" -%}
+          <a href="{{ re.url }}"
+            ><button type="button" class="btn btn-outline-info">Link</button></a
+          >
+          {%- elseif re.type == "vimeo" -%}
+          <iframe
+            src="https://player.vimeo.com/video/{{ re.id }} "    
+            width="100%"    
+            frameborder="0"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+          ></iframe>
+          {%- elseif re.type == "audio" -%}
+          <audio controlslist
+          controls
+          src="{{re.url}}"></audio>
+          {%- elseif re.type == "youtube" -%}
+           <iframe
+            src="https://youtube.com/embed/{{ re.id }}"  
+            width="100%"   
+            frameborder="0"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+          ></iframe>
+          {%- elseif re.type == "image" -%}
+          <div>
+            <a href = "{{re.url}}">
+             <img src = "{{re.url}}" class = "img-thumbnail">
+            </a>
+            </div>
+            {%- elseif re.type == "video" -%}
+            <div>
+              <a href = "{{re.url}}">
+               <video src = "{{re.url}}" class = "img-thumbnail">
+              </a>
+              </div>
+          {% endif %}
+          
+        </div>
+   
+{% endif %}       
+{% endfor %}
+</div>
+
+{% if texts %}
+<div class="row">
+  <h2>texts:</h2>
+{% for txt in texts %}
+  <div class="col-3 bg-light" style="border-style: dotted; padding-bottom: 10px;padding-top: 10px">
+    <h4>{{ txt.title }}</h4>
+    <p>{{ txt.description }}</p>
+    {% if txt.thumbnail%}
+    <img src = "{{txt.thumbnail}}" class = "img-thumbnail">
+    {% endif %}
+    {% if txt.type == "gdoc"%}
+        <a href="{{ txt.url }}"
+      ><button type="button" class="btn btn-outline-info">{{ txt.type }}</button></a>
+      <p>{{ txt.type }}</p>
+    {% elif txt.type == "html" or txt.type == "md"%}
+    <a href="/texts/{{ txt.url }}"
+    ><button type="button" class="btn btn-outline-info">{{ txt.type }}</button></a>
+    {% elif txt.type == "pdf" or txt.type == "docx"%}
+    <a href="/texts/{{ txt.url }}.{{ txt.type }}">
+      <button type="button" class="btn btn-outline-info">{{ txt.type }}</button></a> 
+    {% endif %}
+
+  </div>
+{% endfor %}
+</div>
+{% endif %}
