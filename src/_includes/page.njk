@@ -85,7 +85,7 @@ layout: base.njk
     <h5>resource series</h5>
     <p>{{ re.description }}</p>
     {% for s in re.resources %}
-    <div class="col-4 bg-light" style="border-style: dotted; padding-bottom: 10px; padding-top: 10px;">
+    <div class="col-4 bg-light" style="padding-bottom: 10px; padding-top: 10px;">
       <h4>{{ s.title }}</h4>
       <p>{{ s.description }}</p>
       {% if s.type == "link" %}
@@ -123,7 +123,7 @@ layout: base.njk
     {% endfor %}
     </div>
 {% else %}
-        <div class="col-4 bg-light" style="border-style: dotted; padding-bottom: 10px; padding-top: 10px">
+        <div class="col-4 bg-light" style="padding-bottom: 10px; padding-top: 10px">
           <h4>{{ re.title }}</h4>
           <p>{{ re.description }}</p>
           {%- if re.type == "link" -%}
@@ -174,7 +174,7 @@ layout: base.njk
 <div class="row">
   <h2>texts:</h2>
 {% for txt in texts %}
-  <div class="col-3 bg-light" style="border-style: dotted; padding-bottom: 10px;padding-top: 10px">
+  <div class="col-3 bg-light" style="padding-bottom: 10px;padding-top: 10px">
     <h4>{{ txt.title }}</h4>
     <p>{{ txt.description }}</p>
     {% if txt.thumbnail%}
