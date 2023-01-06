@@ -5,7 +5,8 @@
   "author": "Lydia Jessup",
   "type": "microresidency",
   "phase": "spring",
-  "thumbnail": "/img/emergent.jpg"
+  "thumbnail": "/img/emergent.jpg",
+  "links" : [{"title":"artist website","link": "https://www.lydiajessup.me/"}]
   },
 "resources": [
   {"title": "microresidency talk",

@@ -183,7 +183,6 @@ layout: base.njk
     {% if txt.type == "gdoc"%}
         <a href="{{ txt.url }}"
       ><button type="button" class="btn btn-outline-info">{{ txt.type }}</button></a>
-      <p>{{ txt.type }}</p>
     {% elif txt.type == "html" or txt.type == "md"%}
     <a href="/texts/{{ txt.url }}"
     ><button type="button" class="btn btn-outline-info">{{ txt.type }}</button></a>
