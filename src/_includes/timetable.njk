@@ -1,0 +1,32 @@
+---
+layout: base.njk
+---
+
+{% for e in events %}
+<div class="row">
+  <table class="table table-light table-striped">
+    <thead>
+      <tr>
+        <td>{{ e.date }}</td>
+        <td>{{ e.title }}</td>
+        <td>chair: {{ e.chair }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in e.blocks %}
+      <tr class="table-active">
+        <td>{{ b.time }}</td>
+      </tr>
+      {% for p in b.presenters %}
+      <tr>
+        <td>{{ p.name }}</td>
+
+        <td>{{ p.proj }}</td>
+
+        <td>{{ p.type }}</td>
+      </tr>
+      {% endfor %} {% endfor %}
+    </tbody>
+  </table>
+</div>
+{%endfor%}
