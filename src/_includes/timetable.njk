@@ -2,31 +2,52 @@
 layout: base.njk
 ---
 
-{% for e in events %}
-<div class="row">
-  <table class="table table-light table-striped">
-    <thead>
-      <tr>
-        <td>{{ e.date }}</td>
-        <td>{{ e.title }}</td>
-        <td>chair: {{ e.chair }}</td>
-      </tr>
-    </thead>
-    <tbody>
-      {% for b in e.blocks %}
-      <tr class="table-active">
-        <td>{{ b.time }}</td>
-      </tr>
-      {% for p in b.presenters %}
-      <tr>
-        <td>{{ p.name }}</td>
+<div class="row" data-masonry='{"percentPosition": true }'>
+  {% for ph in timetable %} {% for i in ph.img%}
+  <div class="col-sm-4 my-2">
+    <img src="/img/{{ i }}" class="img-fluid" alt="Responsive image" />
+  </div>
+  {% endfor %} {% for m in ph.months %} {% endfor %} {% for e in ph.events %}
 
-        <td>{{ p.proj }}</td>
+  <div class="col-sm-4">
+    <h4>{{ e.date }} // {{ e.title }}</h4>
+    {% if e.chair %}
+    <P>chair: {{ e.chair }} </P>
+    {% endif%}
+  </div>
+  <div class="col-md-8 mb-2">
+    <table class="table table-light table-striped table-hover">
+      <tbody>
+        {% for b in e.blocks %}
+        <tr class="table-info">
+          <td colspan="3">
+            <span class="badge badge-dark">{{ b.time }} UTC-5</span>
+            {{ b.title }}
+          </td>
+        </tr>
+        {% for p in b.presenters %}
 
-        <td>{{ p.type }}</td>
-      </tr>
-      {% endfor %} {% endfor %}
-    </tbody>
-  </table>
+        <tr>
+          <td>{{ p.name }}</td>
+
+          <td>
+            <a href="/projs/{{ p.url }}">
+              {{ p.proj }}
+            </a>
+          </td>
+
+          <td>{{ p.type }}</td>
+        </tr>
+
+        {% endfor %} {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% for i in e.img %}
+
+  <div class="col-sm-4 my-2">
+    <img src="/img/{{ i }}" class="img-fluid" alt="Responsive image" />
+  </div>
+  {% endfor %} {%endfor%} {%endfor%}
 </div>
-{%endfor%}

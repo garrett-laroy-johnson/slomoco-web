@@ -2,7 +2,6 @@
 {
 "metadata": {
   "title": "A Tilting Body of Precarious Maps and Migrant Constellations",
-  "subtitle" : "live performance by @marcelzaes in collaboration with @SloMoCo participants",
   "author": "Alys Longley and DotDot Studio",
   "type": "microresidency",
   "phase": "fall",
