@@ -189,6 +189,9 @@ layout: base.njk
     {% elif txt.type == "pdf" or txt.type == "docx"%}
     <a href="/texts/{{ txt.url }}.{{ txt.type }}">
       <button type="button" class="btn btn-outline-info">{{ txt.type }}</button></a> 
+      {% elif txt.type == "link"%}
+      <a href="{{ txt.url }}">
+        <button type="button" class="btn btn-outline-info">{{ txt.type }}</button></a> 
     {% endif %}
 
   </div>
