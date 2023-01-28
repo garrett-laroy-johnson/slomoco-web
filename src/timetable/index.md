@@ -5,8 +5,135 @@ timetable:
     img:
       - spring1.png
       - spring2.jpg
+    events:
+      - date: Thursday March 4th 2021
+        title: Opening Keynote by Jessica Rajko
+        img:
+          - rajko.jpg
+        blocks:
+          - time: "16:30-17:30"
+            title: ""
+            presenters:
+              - name: Jessica Rajko
+                proj: "(In)Visible Labor: Understanding Roles and Responsibilities in Dance"
+                type: invited speaker
+                url: "invisible-labor.md"
+              - name: "The PlaceHolder Group: Kavi, Renee Carmichael, Emory Martin, Michael Palumbo"
+                proj: "Playing in Meta-Presence"
+                type: telematic improvisation
+                url: "placeholder-group.md"
+      - date: April 9th 2021
+        title: Invited Talks GVNC
+        chair: Will Hallett
+        img:
+          - gvnc1.png
+          - gvnc2.png
+          - gvnc3.png
+        blocks:
+          - time: "14:00-15:30"
+            title: ""
+            presenters:
+              - name: Rebecca Uliasz and Quran Karriem
+                proj: GVNC
+                type: invited speaker
+      - date: April 16th 2021
+        title: "Spring Presentations Session 1"
+        img:
+          - 416.png
+          - lydia.png
+        blocks:
+          - time: "13:30-15:00"
+            title: presentations
+            presenters:
+              - name: "Liat Berdugo"
+                proj: Internet Aerobics
+                type: Practice Work
+                url: internetaerobics
+              - name: Lydia Jessup
+                proj: Emergent Infrastructures
+                type: microresidency
+                url: raisintruck
+              - name: Emil Berzen & Cumhur Erkut
+                proj: "SwooshBrush"
+                type: presentation
+                url: soundbrush
+              - name: Fernando Gregório
+                proj: The Firebird
+                type: practice work
+                url: the-firebird
+      - date: April 30th 2021
+        title: "Spring Presentations Session 2"
+        blocks:
+          - time: "10:30-11:30"
+            title: workshops + performances
+            presenters:
+              - name: Marcel Zaes
+                proj: Traces of Noise
+                type: interactive performances
+                url: traces-of-noise
+              - name: Selwa Sweidan and Nina Sarnella
+                proj: TOUCH EXPERIMENTS
+                type: workshop
+                url: touch-experiments
+          - time: "13:30-15:00"
+            title: presentations
+            presenters:
+              - name: Marcel Zaes
+                proj: Traces of Noise
+                type: Presentation
+                url: traces-of-noise
+              - name: Fidelia Lam
+                proj: Hello?
+                type: microresidency talk
+                url: fidelia
+              - name: Xavier Nokes
+                proj: They Told Stories
+                type: performance
+                url: they-told-stories
+              - name: The Placeholder Group
+                proj: Playing in the Meta-Presence
+                type: improvisatory telematic performance
+                url: placeholder-group
+      - date: May 19th, 2021
+        title: Provocations Upon Provocations Spring Event
+        img:
+          - provocations-may.png
+        blocks:
+          - time: "14:00-15:30"
+            title: ""
+            presenters:
+              - name: John MacCallum, Teoma Nacarrato, Jessica Rajko
+                proj: "Provocations Upon Provocations: What Escapes Computation in Interactive Performance?"
+                type: ""
+      - date: May 28th 2021
+        title: "Spring Presentations Session 3"
+        img:
+          - frames.png
+          - sward.png
+          - field-guide2.png
+        blocks:
+          - time: "13:30-15:00"
+            title: presentations
+            presenters:
+              - name: Xavier Nokes, Ri Lindegren, Pavan Turaga, Max Bernstein + Olivia Hernandez
+                proj: "[ALT]SOLAS"
+                type: Presentation
+                url: alt-solas
+              - name: Brandon Sward
+                proj: Wild Wild West
+                type: microresidency talk
+                url: wild-wild-west
+              - name: Field Guide
+                proj: Luke Fischbeck, Selwa Sweidan, Dana Dal Bo, and Curtis Tamm
+                type: performance
+                url: field-guide
+              - name: You, Me, and our Computers
+                proj: Lisa Jamhoury
+                type: microresidency talk
+                url: you-me-and-our-computers
   - phase: Summer
     img:
+      - provocations-call.png
       - summer1.jpg
       - summer2.jpg
     events:
