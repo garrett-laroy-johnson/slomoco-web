@@ -1,11 +1,5 @@
 module.exports = function (eleventyConfig) {
-  eleventyConfig.addFilter("makeLowerCase", function (string) {
-    if (string) {
-      return string.toLowerCase();
-    } else {
-      return string;
-    }
-  });
+  eleventyConfig.addFilter("makeLowerCase", (string) => string?.toLowerCase());
   eleventyConfig.addPassthroughCopy("./src/css/");
   eleventyConfig.addWatchTarget("./src/css/");
   eleventyConfig.addPassthroughCopy("./src/img/");
