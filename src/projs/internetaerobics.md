@@ -4,7 +4,7 @@ metadata:
   title: Internet Aerobics
   subtitle: a 20-minute workout routine about the internet, streaming to you through the internet
   type: practice work
-  phase: spring
+  phase: "spring"
   thumbnail: /img/internet-aerobics.jpg
   socials:
     title: Twitter
