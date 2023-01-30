@@ -100,6 +100,12 @@ layout: base.njk
          allow="autoplay; fullscreen"
          allowfullscreen
        ></iframe>
+       {%- elseif s.type == "video" -%}
+       <div>
+         <a href = "{{s.url}}">
+          <video src = "{{s.url}}" class = "img-thumbnail">
+         </a>
+         </div>
        {%- elseif s.type == "image" -%}
        <div>
          <a href = "{{s.url}}">
