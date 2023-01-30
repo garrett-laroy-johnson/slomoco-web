@@ -28,7 +28,9 @@ layout: base.njk
         {% for p in b.presenters %}
 
         <tr>
-          <td>{{ p.name }}</td>
+          <td>
+            <b>{{ p.name }} </b>
+          </td>
 
           <td>
             <a href="/projs/{{ p.url }}">
