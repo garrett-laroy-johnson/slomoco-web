@@ -1,5 +1,5 @@
 body {
-  background-color: rgba(225, 225, 225, 0.998);
+  background-color: #e1e1e1;
 }
 cb:after {
   background-color: #4c00b0;
@@ -16,7 +16,7 @@ blockquote {
 }
 
 .slomocoNav {
-  background-color: #dec2eb;
+  background-color: #c9a1dd;
   color: #052d61;
   /* #F4D187 */
 }

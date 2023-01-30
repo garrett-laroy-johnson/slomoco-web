@@ -73,73 +73,128 @@ layout: base.njk
 
 </div>
 
-<div class="row">
+<div class="row"  data-masonry='{"percentPosition": true }'>
   
   {% if resources %}
-  <h2>resources:</h2>
+  <div class  = "col-sm-3">
+    <h2>resources</h2>
+  </div>
   {% endif %}
   {% for re in resources %}
 {% if re.type == "series" %}
-  <div class="row bg-light">
-    <h4 class="">{{ re.title }}</h4>
+  <div class="row" data-masonry='{"percentPosition": true }'>
+    <h4>{{ re.title }}</h4>
     <h5>resource series</h5>
     <p>{{ re.description }}</p>
     {% for s in re.resources %}
-    <div class="col-4 bg-light" style="padding-bottom: 10px; padding-top: 10px;">
-      <h4>{{ s.title }}</h4>
-      <p>{{ s.description }}</p>
-      {% if s.type == "link" %}
-      <a href="{{ s.url }}">
-        <button type="button" class="btn btn-outline-info">Link</button>
-       </a>
+    <div class="col-3 m-2">
+  
+
+      {% if s.type == "link" or s.type == "text"%}
+      
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{s.title}}</h5>
+            <p class="card-text">{{s.description}}</p>
+            <a href="s.url" class="card-link">link</a>
+          </div>
+        </div>
+
        {%- elseif s.type == "youtube" -%}
-       <iframe
-         src="https://youtube.com/embed/{{ s.id }} "
-         width="100%"
-         frameborder="0"
-         allow="autoplay; fullscreen"
-         allowfullscreen
-       ></iframe>
+     
+  
+       <div class="card">
+        <h5 class="card-title">{{s.title}}</h5>
+        <a href = "{{s.url}}">
+          <iframe
+          src="https://youtube.com/embed/{{ s.id }} "
+          width="100%"
+          height="auto"
+          frameborder="0"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+        ></iframe>
+      </a>
+        <div class="card-body">
+          <p class="card-text">{{s.description}}</p>
+        </div>
+      </div>
+]
        {%- elseif s.type == "video" -%}
+     
+       <div class="card">
+        <h5 class="card-title">{{s.title}}</h5>
+        <a href = "{{s.url}}">
        <div>
          <a href = "{{s.url}}">
           <video src = "{{s.url}}" class = "img-thumbnail">
          </a>
          </div>
+        </a>
+        <div class="card-body">
+          <p class="card-text">{{s.description}}</p>
+        </div>
+      </div>
+
        {%- elseif s.type == "image" -%}
-       <div>
-         <a href = "{{s.url}}">
-          <img src = "{{s.url}}" class = "img-thumbnail">
-         </a>
-         </div>
+ 
+        <div class="card">
+          <h5 class="card-title">{{s.title}}</h5>
+          <a href = "{{s.url}}">
+          <img src="{{s.url}}" class="card-img-top" alt="...">
+        </a>
+          <div class="card-body">
+            <p class="card-text">{{s.description}}</p>
+          </div>
+        </div>
+     
+    
        {% elseif s.type == "audio" %}
        <audio
        controls controlslist
        src="{{s.url}}"></audio>
        {% elseif s.type == "vimeo" %}
+       <div class="card" style="width: 18rem;">
+        <h5 class="card-title">{{s.title}}</h5>
+        <a href = "{{s.url}}">
       <iframe
         src="https://player.vimeo.com/video/{{ s.id }}"
         width="100%"
+        height  = "auto"
         frameborder="0"
         allow="autoplay; fullscreen"
         allowfullscreen
       ></iframe>
+    </a>
+    <div class="card-body">
+      <p class="card-text">{{s.description}}</p>
+    </div>
+  </div>
       {% endif %}
     </div>
     {% endfor %}
     </div>
+    {# NOT SERIES #}
 {% else %}
-        <div class="col-4 bg-light" style="padding-bottom: 10px; padding-top: 10px">
-          <h4>{{ re.title }}</h4>
-          <p>{{ re.description }}</p>
-          {%- if re.type == "link" -%}
-          <a href="{{ re.url }}"
-            ><button type="button" class="btn btn-outline-info">Link</button></a
-          >
+        <div class="col-3 bg-light py-2" style="padding-bottom: 10px; padding-top: 10px">
+        
+          {%- if re.type == "link" or re.type == "text" -%}
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{re.title}}</h5>
+              <p class="card-text">{{re.description}}</p>
+              <a href="{{re.url}}" class="card-link">link</a>
+            </div>
+          </div>
+
+        
           {%- elseif re.type == "vimeo" -%}
           <iframe
             src="https://player.vimeo.com/video/{{ re.id }} "    
             width="100%"    
+            height = "auto"
             frameborder="0"
             allow="autoplay; fullscreen"
             allowfullscreen
@@ -149,25 +204,51 @@ layout: base.njk
           controls
           src="{{re.url}}"></audio>
           {%- elseif re.type == "youtube" -%}
-           <iframe
-            src="https://youtube.com/embed/{{ re.id }}"  
-            width="100%"   
-            frameborder="0"
-            allow="autoplay; fullscreen"
-            allowfullscreen
-          ></iframe>
-          {%- elseif re.type == "image" -%}
-          <div>
+
+
+          <div class="card">
+            <h5 class="card-title">{{re.title}}</h5>
             <a href = "{{re.url}}">
-             <img src = "{{re.url}}" class = "img-thumbnail">
-            </a>
+              <iframe
+              src="https://youtube.com/embed/{{ re.id }}"  
+              width="100%"  
+              height = "auto" 
+              frameborder="0"
+              allow="autoplay; fullscreen"
+              allowfullscreen
+            ></iframe>
+  
+          </a>
+            <div class="card-body">
+              <p class="card-text">{{re.description}}</p>
             </div>
+          </div>
+
+          {%- elseif re.type == "image" -%}
+        
+          <div class="card">
+            <h5 class="card-title">{{re.title}}</h5>
+            <a href = "{{re.url}}">
+            <img src="{{re.url}}" class="card-img-top" alt="...">
+          </a>
+            <div class="card-body">
+              <p class="card-text">{{re.description}}</p>
+            </div>
+          </div>
+          
             {%- elseif re.type == "video" -%}
-            <div>
-              <a href = "{{re.url}}">
-               <video src = "{{re.url}}" class = "img-thumbnail">
-              </a>
+    
+              <div class="card">
+                <h5 class="card-title">{{re.title}}</h5>
+                <a href = "{{re.url}}">
+                  <video src = "{{re.url}}" class = "img-thumbnail">
+                 </a>
+                <div class="card-body">
+                  <p class="card-text">{{re.description}}</p>
+                </div>
               </div>
+
+
           {% endif %}
           
         </div>
