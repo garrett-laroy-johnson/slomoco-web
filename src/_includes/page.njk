@@ -87,7 +87,7 @@ layout: base.njk
     <h5>resource series</h5>
     <p>{{ re.description }}</p>
     {% for s in re.resources %}
-    <div class="col-3 m-2">
+    <div class="col-md-6 p-1 m-1">
   
 
       {% if s.type == "link" or s.type == "text"%}
@@ -120,7 +120,7 @@ layout: base.njk
           <p class="card-text">{{s.description}}</p>
         </div>
       </div>
-]
+
        {%- elseif s.type == "video" -%}
      
        <div class="card">
@@ -149,13 +149,34 @@ layout: base.njk
           </div>
         </div>
      
-    
+        {%- elseif s.type == "openprocessing" -%}
+         
+        <div class="card">
+          <h5 class="card-title">{{s.title}}</h5>
+          <a href = "{{s.url}}">
+        <iframe
+          src="https://openprocessing.org/sketch/{{ s.id }}/embed "    
+          width="400"    
+          height = "400"
+          frameborder="0"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+        ></iframe>
+
+
+        
+      </a>
+      <div class="card-body">
+        <p class="card-text">{{s.description}}</p>
+      </div>
+    </div>
+        
        {% elseif s.type == "audio" %}
        <audio
        controls controlslist
        src="{{s.url}}"></audio>
        {% elseif s.type == "vimeo" %}
-       <div class="card" style="width: 18rem;">
+       <div class="card">
         <h5 class="card-title">{{s.title}}</h5>
         <a href = "{{s.url}}">
       <iframe
@@ -189,8 +210,34 @@ layout: base.njk
             </div>
           </div>
 
-        
+          {%- elseif re.type == "openprocessing" -%}
+         
+          <div class="card">
+            <h5 class="card-title">{{re.title}}</h5>
+            <a href = "{{re.url}}">
+          <iframe
+            src="https://openprocessing.org/sketch/{{ re.id }}/embed "    
+            width="100%"    
+            height = "auto"
+            frameborder="0"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+          ></iframe>
+
+
+          
+        </a>
+        <div class="card-body">
+          <p class="card-text">{{re.description}}</p>
+        </div>
+      </div>
+          
+
           {%- elseif re.type == "vimeo" -%}
+         
+          <div class="card">
+            <h5 class="card-title">{{re.title}}</h5>
+            <a href = "{{re.url}}">
           <iframe
             src="https://player.vimeo.com/video/{{ re.id }} "    
             width="100%"    
@@ -199,6 +246,11 @@ layout: base.njk
             allow="autoplay; fullscreen"
             allowfullscreen
           ></iframe>
+        </a>
+        <div class="card-body">
+          <p class="card-text">{{re.description}}</p>
+        </div>
+      </div>
           {%- elseif re.type == "audio" -%}
           <audio controlslist
           controls
