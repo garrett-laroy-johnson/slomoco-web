@@ -6,7 +6,9 @@ layout: base.njk
   {% for i in images | shuffle %}
 
   <div class="col-sm-4 my-2">
-    <img src="{{ i }}" class="img-fluid" alt="" />
+    <a href="{{ i }}">
+      <img src="{{ i }}" class="img-fluid" alt="" />
+    </a>
   </div>
   {% endfor %}
 </div>

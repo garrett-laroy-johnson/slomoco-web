@@ -298,6 +298,21 @@
           </footer>
     </div>
 
+    <script>
+      $(function () {
+        /* 瀑布流區塊div */
+        var $container = $(".masonry");
+    
+        //當圖片讀取完畢才執行
+        $container.imagesLoaded(function () {
+          //選擇瀑布流的區塊名稱
+          $container.masonry({
+            itemSelector: ".item",
+          });
+        });
+      });
+    </script>
+
     <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" defer></script>
