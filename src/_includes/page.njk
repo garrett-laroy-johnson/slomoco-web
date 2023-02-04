@@ -73,13 +73,15 @@ layout: base.njk
 
 </div>
 
+{% if resources %}
+
+
+
+{% endif %}
+
 <div class="row"  data-masonry='{"percentPosition": true }'>
   
-  {% if resources %}
-  <div class  = "col-sm-3">
-    <h2>resources</h2>
-  </div>
-  {% endif %}
+ 
   {% for re in resources %}
 {% if re.type == "series" %}
   <div class="row" data-masonry='{"percentPosition": true }'>
@@ -198,7 +200,7 @@ layout: base.njk
     </div>
     {# NOT SERIES #}
 {% else %}
-        <div class="col-3 bg-light py-2" style="padding-bottom: 10px; padding-top: 10px">
+        <div class="col-6 bg-light py-2" style="padding-bottom: 10px; padding-top: 10px">
         
           {%- if re.type == "link" or re.type == "text" -%}
 

@@ -26,17 +26,17 @@ resources:
   - title: "July 2020: Time and Space"
     type: series
     description: This clock focuses on the relationship between Time and Space. Exploring concepts of Einstein’s famous theory of spacetime, known technically as tensor mathematics, I used PoseNet, a pose estimation software using TensorFlow.js, for my autoethnographic research on how our experience of time changes when moving within or beyond boundary boxes. This felt particularly apt during a time when many of us were mostly homebound. If the relative nature of space and time is due to the entanglement of their perception, how is my perception related to the time and space I inhabit?
-    resources: 
-        - type: vimeo
-          id: 600380976
-        - type: openprocessing
-          id : 1365252
-- title: "September 2020: Time Perspective"
-  description: This clock explores how one’s sense of time changes based on perspective. The layering is to demonstrate how changes in perspective can either be an individual’s perspective over time or a result of interacting with other people or forces. I chose the overhead view to illustrate the depth of time or perhaps the perspective of time itself. As Byung-Chul Han states in “The Scent of Time,” “Time deepens vertically instead of stretching along the horizontal narrative path.” The echoing quality of my dancing body, however, breaks up the temporal and narrative continuity, as events no longer have a clear sequence and the past and future of the dance are all being shown in the present. This is what Byung-Chul Han calls “time without scent” or “non-time,” which he attributes to the growing atomization of life and identity, especially with the rise of technology. These factors complicate people’s ability to maintain or change their temporal perspectives.
-  type: series
-  resources: 
-        - type: vimeo
-          id : 600381043
+    resources:
+      - type: vimeo
+        id: 600380976
+      - type: openprocessing
+        id: 1365252
+  - title: "September 2020: Time Perspective"
+    description: This clock explores how one’s sense of time changes based on perspective. The layering is to demonstrate how changes in perspective can either be an individual’s perspective over time or a result of interacting with other people or forces. I chose the overhead view to illustrate the depth of time or perhaps the perspective of time itself. As Byung-Chul Han states in “The Scent of Time,” “Time deepens vertically instead of stretching along the horizontal narrative path.” The echoing quality of my dancing body, however, breaks up the temporal and narrative continuity, as events no longer have a clear sequence and the past and future of the dance are all being shown in the present. This is what Byung-Chul Han calls “time without scent” or “non-time,” which he attributes to the growing atomization of life and identity, especially with the rise of technology. These factors complicate people’s ability to maintain or change their temporal perspectives.
+    type: series
+    resources:
+      - type: vimeo
+        id: 600381043
 ---
 
 “Time Enough” is a creative research project studying our perception and experience of time through dance and technology. The piece is composed of 10 smaller-scale experiments (or “clocks,” if you will) each depicting a different element of the research. The layering and juxtaposition of these “clocks” points to a deeper narrative about time and its fluidity depending on context and perspective.
