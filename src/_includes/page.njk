@@ -39,10 +39,10 @@ layout: base.njk
       <p>{{ metadata.description }}</p>    
     </div>
 
-    <div class="col-3 bg-light">
+    <div class="col-3">
       {% if metadata.thumbnail %}
       <a href = "{{metadata.thumbnail}}">
-        <img src = "{{metadata.thumbnail}}" class = "img-thumbnail">
+        <img src = "{{metadata.thumbnail}}" class = "bg-light img-thumbnail my-2">
        </a>
       {% endif %}
       {% if metadata.links %}
@@ -59,187 +59,132 @@ layout: base.njk
     <h4>social</h4>
     {% endif %} 
     {% for social in metadata.socials %}
-    <div>
+    <div class = "py-1">
       <a href="{{ social.link }}">
         <button type="button" class="btn btn-outline-secondary">{{ social.title }}</button>  
       </a>
     </div>
     {% endfor %}
-  <hr>
+<hr>
     <span class="badge bg-dark rounded-pill" >
       {{ metadata.phase }} {{ metadata.type }}
     </span>
   </div>
 
 </div>
-
-{% if resources %}
-
-
-
-{% endif %}
+<hr>
 
 <div class="row masonry"  data-masonry='{"percentPosition": true }'>
   
- 
-  {% for re in resources %}
+{% for re in resources %}
 {% if re.type == "series" %}
-  <div class="row" data-masonry='{"percentPosition": true }'>
-    <h4>{{ re.title }}</h4>
-    <h5>resource series</h5>
-    <p>{{ re.description }}</p>
-    {% for s in re.resources %}
-    <div class="col-md-6 p-1 m-1">
-  
 
-      {% if s.type == "link" or s.type == "text"%}
-      
+    <div class = "col-md-6 bg-light py-1 my-1">
+        <h4>{{ re.title }}</h4>
+        <h5>resource series</h5>
+        
+        <p>{{ re.description }}</p>
+    </div>
 
-        <div class="card">
+    {% for r in re.resources %}
+    <div class="col-md-6 col-xl-4 py-1">
+        <div class="card my-2">
           <div class="card-body">
-            <h5 class="card-title">{{s.title}}</h5>
-            <p class="card-text">{{s.description}}</p>
-            <a href="s.url" class="card-link">link</a>
-          </div>
-        </div>
-
-       {%- elseif s.type == "youtube" -%}
-     
-  
-       <div class="card">
-        <h5 class="card-title">{{s.title}}</h5>
-        <a href = "{{s.url}}">
-          <iframe
-          src="https://youtube.com/embed/{{ s.id }} "
-          width="100%"
-          height="auto"
-          frameborder="0"
-          allow="autoplay; fullscreen"
-          allowfullscreen
-        ></iframe>
-      </a>
-        <div class="card-body">
-          <p class="card-text">{{s.description}}</p>
-        </div>
-      </div>
-
-       {%- elseif s.type == "video" -%}
-     
-       <div class="card">
-        <h5 class="card-title">{{s.title}}</h5>
-        <a href = "{{s.url}}">
-       <div>
-         <a href = "{{s.url}}">
-          <video src = "{{s.url}}" class = "img-thumbnail">
-         </a>
-         </div>
-        </a>
-        <div class="card-body">
-          <p class="card-text">{{s.description}}</p>
-        </div>
-      </div>
-
-       {%- elseif s.type == "image" -%}
- 
-        <div class="card">
-          <h5 class="card-title">{{s.title}}</h5>
-          <a href = "{{s.url}}">
-          <img src="{{s.url}}" class="card-img-top" alt="...">
-        </a>
-          <div class="card-body">
-            <p class="card-text">{{s.description}}</p>
-          </div>
-        </div>
-     
-        {%- elseif s.type == "openprocessing" -%}
-         
-        <div class="card">
-          <h5 class="card-title">{{s.title}}</h5>
-          <a href = "{{s.url}}">
-        <iframe
-          src="https://openprocessing.org/sketch/{{ s.id }}/embed "    
-          width="400"    
-          height = "400"
-          frameborder="0"
-          allow="autoplay; fullscreen"
-          allowfullscreen
-        ></iframe>
-
-
-        
-      </a>
-      <div class="card-body">
-        <p class="card-text">{{s.description}}</p>
-      </div>
-    </div>
-        
-       {% elseif s.type == "audio" %}
-       <audio
-       controls controlslist
-       src="{{s.url}}"></audio>
-       {% elseif s.type == "vimeo" %}
-       <div class="card">
-        <h5 class="card-title">{{s.title}}</h5>
-        <a href = "{{s.url}}">
-      <iframe
-        src="https://player.vimeo.com/video/{{ s.id }}"
-        width="100%"
-        height  = "auto"
-        frameborder="0"
-        allow="autoplay; fullscreen"
-        allowfullscreen
-      ></iframe>
-    </a>
-    <div class="card-body">
-      <p class="card-text">{{s.description}}</p>
-    </div>
-  </div>
-      {% endif %}
-    </div>
-    {% endfor %}
-    </div>
-    {# NOT SERIES #}
-{% else %}
-        <div class="col-6 bg-light py-2" style="padding-bottom: 10px; padding-top: 10px">
-        
-          {%- if re.type == "link" or re.type == "text" -%}
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{re.title}}</h5>
-              <p class="card-text">{{re.description}}</p>
-              <a href="{{re.url}}" class="card-link">link</a>
-            </div>
-          </div>
-
-          {%- elseif re.type == "openprocessing" -%}
-         
-          <div class="card">
-            <h5 class="card-title">{{re.title}}</h5>
-            <a href = "{{re.url}}">
-          <iframe
-            src="https://openprocessing.org/sketch/{{ re.id }}/embed "    
+             {% if r.title %}
+            <h5 class="card-title" >{{r.title}}</h5>
+              {% endif %}
+              {% if r.description %}
+            <p class="card-text">{{r.description}}</p>
+            {# link #}
+            {% endif %}
+    
+            {% if r.type == "link" or r.type == "text" %}
+            <a href="{{r.url}}" class="card-link">link</a>
+    {#                       openprocessing #}
+            {% elseif r.type == "openprocessing" %}
+            <iframe
+            src="https://openprocessing.org/sketch/{{ r.id }}/embed "    
             width="100%"    
             height = "auto"
             frameborder="0"
             allow="autoplay; fullscreen"
             allowfullscreen
           ></iframe>
-
-
+          {% elseif r.type == "vimeo" %}
+          <a href = "{{r.url}}">
+              <iframe
+                src="https://player.vimeo.com/video/{{ r.id }} "    
+                width="100%"    
+                height = "auto"
+                frameborder="0"
+                allow="autoplay; fullscreen"
+                allowfullscreen
+              ></iframe>
+            </a>
+            {%- elseif r.type == "audio" -%}
+            <audio controlslist
+            controls
+            src="{{r.url}}"></audio>
+            {%- elseif r.type == "youtube" -%}
+            <a href = "{{r.url}}">
+              <iframe
+              src="https://youtube.com/embed/{{ r.id }}"  
+              width="100%"  
+              height = "auto" 
+              frameborder="0"
+              allow="autoplay; fullscreen"
+              allowfullscreen
+            ></iframe>
+    
+          </a>
+          {%- elseif r.type == "image" -%}
           
-        </a>
-        <div class="card-body">
-          <p class="card-text">{{re.description}}</p>
+          <a href = "{{r.url}}">
+            <img src="{{r.url}}" class="card-img-top" alt="...">
+          </a>
+    
+          {%- elseif r.type == "video" -%}
+    
+          <a href = "{{r.url}}">
+            <video src = "{{r.url}}" class = "img-thumbnail">
+          </a>
+             {% endif %}
+          </div>
         </div>
-      </div>
-          
+    </div>
+     
+    {% endfor %}
 
-          {%- elseif re.type == "vimeo" -%}
-         
-          <div class="card">
-            <h5 class="card-title">{{re.title}}</h5>
-            <a href = "{{re.url}}">
+
+    {# NOT SERIES #}
+{% else %}
+
+
+<div class="col-md-6 col-xl-4 py-1">
+    <div class="card my-2">
+      <div class="card-body">
+         {% if re.title %}
+        <h5 class="card-title" >{{re.title}}</h5>
+          {% endif %}
+          {% if re.description %}
+        <p class="card-text">{{re.description}}</p>
+        {# link #}
+        {% endif %}
+
+        {% if re.type == "link" or re.type == "text" %}
+        <a href="{{re.url}}" class="card-link">link</a>
+{#                       openprocessing #}
+        {% elseif re.type == "openprocessing" %}
+        <iframe
+        src="https://openprocessing.org/sketch/{{ re.id }}/embed "    
+        width="100%"    
+        height = "auto"
+        frameborder="0"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+      ></iframe>
+      {% elseif re.type == "vimeo" %}
+      <a href = "{{re.url}}">
           <iframe
             src="https://player.vimeo.com/video/{{ re.id }} "    
             width="100%"    
@@ -249,93 +194,83 @@ layout: base.njk
             allowfullscreen
           ></iframe>
         </a>
-        <div class="card-body">
-          <p class="card-text">{{re.description}}</p>
-        </div>
+        {%- elseif re.type == "audio" -%}
+        <audio controlslist
+        controls
+        src="{{re.url}}"></audio>
+        {%- elseif re.type == "youtube" -%}
+        <a href = "{{re.url}}">
+          <iframe
+          src="https://youtube.com/embed/{{ re.id }}"  
+          width="100%"  
+          height = "auto" 
+          frameborder="0"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+        ></iframe>
+
+      </a>
+      {%- elseif re.type == "image" -%}
+      
+      <a href = "{{re.url}}">
+        <img src="{{re.url}}" class="card-img-top" alt="...">
+      </a>
+
+      {%- elseif re.type == "video" -%}
+
+      <a href = "{{re.url}}">
+        <video src = "{{re.url}}" class = "img-thumbnail">
+      </a>
+         {% endif %}
       </div>
-          {%- elseif re.type == "audio" -%}
-          <audio controlslist
-          controls
-          src="{{re.url}}"></audio>
-          {%- elseif re.type == "youtube" -%}
+    </div>
+  </div> 
 
 
-          <div class="card">
-            <h5 class="card-title">{{re.title}}</h5>
-            <a href = "{{re.url}}">
-              <iframe
-              src="https://youtube.com/embed/{{ re.id }}"  
-              width="100%"  
-              height = "auto" 
-              frameborder="0"
-              allow="autoplay; fullscreen"
-              allowfullscreen
-            ></iframe>
-  
-          </a>
-            <div class="card-body">
-              <p class="card-text">{{re.description}}</p>
-            </div>
-          </div>
-
-          {%- elseif re.type == "image" -%}
-        
-          <div class="card">
-            <h5 class="card-title">{{re.title}}</h5>
-            <a href = "{{re.url}}">
-            <img src="{{re.url}}" class="card-img-top" alt="...">
-          </a>
-            <div class="card-body">
-              <p class="card-text">{{re.description}}</p>
-            </div>
-          </div>
-          
-            {%- elseif re.type == "video" -%}
-    
-              <div class="card">
-                <h5 class="card-title">{{re.title}}</h5>
-                <a href = "{{re.url}}">
-                  <video src = "{{re.url}}" class = "img-thumbnail">
-                 </a>
-                <div class="card-body">
-                  <p class="card-text">{{re.description}}</p>
-                </div>
-              </div>
-
-
-          {% endif %}
-          
-        </div>
    
 {% endif %}       
 {% endfor %}
-</div>
+
 
 {% if texts %}
-<div class="row">
-  <h2>texts:</h2>
+
 {% for txt in texts %}
-  <div class="col-3 bg-light" style="padding-bottom: 10px;padding-top: 10px">
-    <h4>{{ txt.title }}</h4>
-    <p>{{ txt.description }}</p>
-    {% if txt.thumbnail%}
-    <img src = "{{txt.thumbnail}}" class = "img-thumbnail">
-    {% endif %}
+  <div class="col-sm-3 py-1 pb-3">
+    <div class="card my-2">
+        <div class="card-body">
+           {% if txt.title %}
+          <h5 class="card-title" >{{ txt.title }}</h5>
+            {% endif %}
+            {% if txt.description %}
+            <p>{{txt.description}}</p>
+            {% endif %}
+  
+            {% if txt.thumbnail%}
+            <img src = "{{txt.thumbnail}}" class = "img-thumbnail">
+            {% endif %}
+            <div class = "text-center">
     {% if txt.type == "gdoc"%}
         <a href="{{ txt.url }}"
-      ><button type="button" class="btn btn-outline-info">{{ txt.type }}</button></a>
+      ><button type="button" class="btn"><i class="fa-solid fa-file-lines fa-2xl"></i></button></a>
+     
     {% elif txt.type == "html" or txt.type == "md"%}
     <a href="/texts/{{ txt.url }}"
-    ><button type="button" class="btn btn-outline-info">{{ txt.type }}</button></a>
+    ><button type="button" class="btn"><i class="fa-solid fa-file-lines fa-2xl"></i></button></a>
+
     {% elif txt.type == "pdf" or txt.type == "docx"%}
     <a href="/texts/{{ txt.url }}.{{ txt.type }}">
-      <button type="button" class="btn btn-outline-info">{{ txt.type }}</button></a> 
+      <button type="button" class="btn"><i class="fa-solid fa-file-lines fa-2xl"></i></button></a> 
+    
       {% elif txt.type == "link"%}
       <a href="{{ txt.url }}">
-        <button type="button" class="btn btn-outline-info">{{ txt.type }}</button></a> 
+        <button type="button" class="btn"><i class="fa-solid fa-file-lines fa-2xl"></i></button></a> 
+       
     {% endif %}
-
+    </div>
+      </div>
+  </div>
   </div>
 {% endfor %}
-</div>
+
 {% endif %}
+</div>

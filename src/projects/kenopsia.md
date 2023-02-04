@@ -16,6 +16,10 @@ resources:
   - title: ""
     type: image
     url: /img/kenopsia2.jpg
+  - type: image
+    url: /img/kenopsia1.jpg
+  - type: image
+    url: /img/kenopsia3.png
 ---
 
 In the fall of 2020, the Lehman College Theatre and Dance Program embarked on the creation of an original devised multimedia production called Kenopsia. Like many artists we found ourselves in new territory. The team of designers, students, director of video design, and director/choreographer all had to learn new ways of creating and communicating in order to create a performance designed for the Zoom platform. Zoom presents a myriad of challenges, but also some benefits. Kenopsia was created in direct relationship to the medium of Zoom and would not exist without it. In this presentation Director of Video Design Monica Duncan and Director/Choreographer Amy Larimer will share the strategies used to conceptualize and create Kenopsia. Of particular note are the choreographic challenges. A significant focus of the presentation will be the ways we used live mixing and processing to realize choreography.

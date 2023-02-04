@@ -1,0 +1,64 @@
+{% block mediaresource %}
+<div class="col-md-6 col-xl-4 py-1">
+    <div class="card m-2">
+      <div class="card-body">
+        <h5 class="card-title m-2" >{{re.title}}</h5>
+        <p class="card-text">{{re.description}}</p>
+        {# link #}
+
+        {% if re.type == "link" or re.type == "text" %}
+        <a href="{{re.url}}" class="card-link">link</a>
+{#               
+        openprocessing #}
+        {% elseif re.type == "openprocessing" %}
+        <iframe
+        src="https://openprocessing.org/sketch/{{ re.id }}/embed "    
+        width="100%"    
+        height = "auto"
+        frameborder="0"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+      ></iframe>
+      {% elseif re.type == "vimeo" %}
+      <a href = "{{re.url}}">
+          <iframe
+            src="https://player.vimeo.com/video/{{ re.id }} "    
+            width="100%"    
+            height = "auto"
+            frameborder="0"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+          ></iframe>
+        </a>
+        {%- elseif re.type == "audio" -%}
+        <audio controlslist
+        controls
+        src="{{re.url}}"></audio>
+        {%- elseif re.type == "youtube" -%}
+        <a href = "{{re.url}}">
+          <iframe
+          src="https://youtube.com/embed/{{ re.id }}"  
+          width="100%"  
+          height = "auto" 
+          frameborder="0"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+        ></iframe>
+
+      </a>
+      {%- elseif re.type == "image" -%}
+      
+      <a href = "{{re.url}}">
+        <img src="{{re.url}}" class="card-img-top" alt="...">
+      </a>
+
+      {%- elseif re.type == "video" -%}
+
+      <a href = "{{re.url}}">
+        <video src = "{{re.url}}" class = "img-thumbnail">
+      </a>
+         {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endblock%}

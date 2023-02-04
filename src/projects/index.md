@@ -5,7 +5,7 @@ layout: base.njk
 
 ## Projects
 
-<table class = "table table-striped">
+<table class = "table table-striped table-hover">
 <tr>
 
 <th>Project</th>
