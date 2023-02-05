@@ -9,6 +9,15 @@ layout: about.njk
 
 SloMoCo 2021, a durational event-experiment sponsored by the MOCO (Movement and Computing) steering committee and community. SloMoCo is refiguring the conference form via global collaborations in collective knowledge-production, cybernetically informed learning-making structurations, and telematically mediated field practice. SloMoCo temporally (explodes, augments, prolates) the event conference as a site of knowledge production.
 
+## About This Site
+
+This site was created after SloMoCo's conclusion to combine two web presences:
+
+1.  A public facing website hosted on MOCO's servers
+2.  A [Manifold instance](https://manifoldapp.org/) where presenters could create their own project pages.
+
+This website is a final archived combination of the two.
+
 ## SloMoCommittee
 
 - Garrett Laroy Johnson, SloMoCo chair
