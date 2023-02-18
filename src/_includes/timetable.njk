@@ -7,21 +7,15 @@ layout: base.njk
   <div class="col-sm-4 my-2">
     <img src="/img/{{ i }}" class="img-fluid" alt="Responsive image" />
   </div>
-  {% endfor %} {% for m in ph.months %} {% endfor %} {% for e in ph.events %}
+  {% endfor %} {% for e in ph.events %}
 
-  <div class="col-sm-4">
-    <h4>{{ e.date }} // {{ e.title }}</h4>
-    {% if e.chair %}
-    <P>chair: {{ e.chair }} </P>
-    {% endif%}
-  </div>
   <div class="col-md-8 mb-2">
     <table class="table table-light table-striped table-hover">
       <tbody>
         {% for b in e.blocks %}
-        <tr class="table-info">
+        <tr class="table-dark">
           <td colspan="3">
-            <span class="badge badge-dark">{{ b.time }} UTC-5</span>
+            <span ;> {{ e.date }} | {{ b.time }} UTC-5</span>
             {{ b.title }}
           </td>
         </tr>
