@@ -87,7 +87,6 @@ images:
   - /img/min/facemosh4.png
   - /img/min/facemosh5.png
   - /img/min/fall1.png
-  - /img/min/favi.jpg
   - /img/min/fidelia.png
   - /img/min/field-guide.png
   - /img/min/field-guide2.png
