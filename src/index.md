@@ -1,5 +1,6 @@
 ---
 layout: splash.njk
+title: SLOMOCO
 images:
   - /img/min/416.png
   - /img/min/abundance1.jpg
